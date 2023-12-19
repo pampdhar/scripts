@@ -16,3 +16,14 @@ fi
 if [ "${APP_NAME}" = "minihpl" ]; then
     ${APP_DIR}/minihpl/doMinihpl_1p
 fi
+
+# PELE using rocSHORE
+if [ "${APP_NAME}" = "pele" ]; then
+    cd "${APP_DIR}"
+    ${APP_DIR}/rocShore_pele.sh
+fi
+
+# rochpl using rocSHORE
+if [ "${APP_NAME}" = "rochpl" ]; then
+    ${APP_DIR}/rocShore_rochpl.sh
+fi
