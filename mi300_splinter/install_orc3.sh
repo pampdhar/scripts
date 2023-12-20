@@ -1,29 +1,27 @@
-#!/bin/bash
+#!/bin/bash -vx
 
-# Function to change/cd into a directory
-change_directory() {
-    # Get the directory path from the argument
-    directory="$1"
-    cd "$directory"
-}
+# User changes here
+USER="pampdhar"
+ORC_DIR_NAME="orc3_pamposh"
 
+###################################################
 
-# Specify the home orc3 directory path
-directory=/home/pampdhar/orc3_pamposh
+HOME_DIR="/home/${USER}"
+# The home orc3 directory path
+ORC_DIR="${HOME_DIR}/${ORC_DIR_NAME}"
 
-# Check if the directory exists
-if [ -d "$directory" ]; then
-    echo "orc3_pamposh directory already exists"
+# Check if the orc3 directory already exists
+if [ -d "${ORC_DIR}" ]; then
+    echo "${ORC_DIR_NAME} directory already exists, pulling latest changes..."
+    cd "${ORC_DIR}"
+    git clone git@github.amd.com:dcgpu-validation/orc3.git
 else
     # Create the directory
-    mkdir -p "$directory"
-    echo "orc3_pamposh directory created"
+    mkdir -p "${ORC_DIR}"
+    echo "${ORC_DIR_NAME} directory created"
+    cd "${ORC_DIR}"
+    git clone git@github.amd.com:dcgpu-validation/orc3.git
+    cd "${ORC_DIR}/orc3"
+    sudo orc_install/install_pyenv.sh
+    orc_python orc_install/install.py --venv=${ORC_DIR}/orc3_py_venv dev
 fi
-
-# Call the function and pass the directory path as an argument
-change_directory $directory
-git clone git@github.amd.com:dcgpu-validation/orc3.git
-change_directory "$directory/orc3"
-sudo orc_install/install_pyenv.sh
-orc_python orc_install/install.py --venv=/home/pampdhar/orc3_pamposh/orc3_py_venv dev
-source /home/pampdhar/orc3_pamposh/orc3_py_venv/bin/activate
