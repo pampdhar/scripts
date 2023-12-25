@@ -9,67 +9,28 @@ AGT_DIR="/home/amd/tools/agt_internal"
 
 ##############################################################
 
+# Adding SSH keys here
+./set_ssh_keys.sh
+
+##############################################################
+
 # Get the scripts folder
-cd ${HOME_DIR}
-# Check if the scripts directory exists
-if [ -d "${SCRIPTS_DIR}" ]; then
-    echo "scripts directory already exists. Pulling repo for latest changes now..."
-    git pull git@github.com:pampdhar/scripts.git
-else
-    git clone git@github.com:pampdhar/scripts.git
-fi
+./get_scripts.sh
 
 ##############################################################
-
-#add ssh keys --> get scripts from github.com
-
-
-
-#ADDING SSH keys here
-
-HOST_NAME=${hostname}
-
-
-##############################################################
-
 
 # Get the latest agt_internal with the amd-tool-installer
-
-python3 -m venv amd-installer-tools
-source amd-installer-tools/bin/activate
-python3 -m pip install amd-tool-installer --extra-index-url=http://mkmartifactory.amd.com/artifactory/api/pypi/hw-orc3pypi-prod-local/simple --trusted-host=mkmartifactory.amd.com --upgrade
-echo "Installing the latest agt_internal version..."
-amd-tool-install agt_internal ${AGT_DIR} latest
-deactivate
+./get_agt_int.sh
 
 ##############################################################
 
 # Get the powerlens repository
-git clone git@github.amd.com:dcgpu-validation/powerlens.git
-cd powerlens
-pip install -e .
+./get_powerlens.sh
 
 ##############################################################
 
 # install orc3
-
-# Specify the home orc3 directory path
-ORC_DIR="{HOME_DIR}/orc3_pamposh"
-cd ${HOME_DIR}
-
-# Check if the directory exists
-if [ -d "${ORC_DIR}" ]; then
-    echo "orc3_pamposh directory already exists"
-    git clone git@github.amd.com:dcgpu-validation/orc3.git
-else
-    # Create the directory
-    mkdir -p "${ORC_DIR}"
-    echo "orc3_pamposh directory created"
-    git clone git@github.amd.com:dcgpu-validation/orc3.git
-    cd "${ORC_DIR}/orc3"
-    sudo orc_install/install_pyenv.sh
-    orc_python orc_install/install.py --venv=${ORC_DIR}/orc3_py_venv dev
-fi
+./install_orc3.sh
 
 ##############################################################
 # Modify bashrc file
