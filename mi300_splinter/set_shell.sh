@@ -15,22 +15,18 @@ AGT_DIR="/home/amd/tools/agt_internal"
 ##############################################################
 
 # Get the scripts folder
-./get_scripts.sh
+cd ${HOME_DIR}
 
-##############################################################
-
-# Get the latest agt_internal with the amd-tool-installer
-./get_agt_int.sh
-
-##############################################################
-
-# Get the powerlens repository
-./get_powerlens.sh
-
-##############################################################
-
-# install orc3
-./install_orc3.sh
+# Check if the scripts directory exists
+if [ -d "${SCRIPTS_DIR}" ]; then
+    echo "scripts directory already exists. Pulling repo for latest changes now..."
+    sudo chmod 777 -R ${SCRIPTS_DIR}
+    cd ${SCRIPTS_DIR}
+    git pull git@github.com:pampdhar/scripts.git
+else
+    git clone git@github.com:pampdhar/scripts.git
+    sudo chmod 777 -R ${SCRIPTS_DIR}
+fi
 
 ##############################################################
 # Modify bashrc file
@@ -61,6 +57,26 @@ echo 'Changes to bashrc applied.'
 
 ##############################################################
 
+# Initial setup the ubuntu system with some pre-requisites for this set shell script
+. ${SCRIPTS_DIR_PROJ}/set_ubuntu.sh
+
+##############################################################
+
+# Get the latest agt_internal with the amd-tool-installer
+. ${SCRIPTS_DIR_PROJ}/get_agt_int.sh
+
+##############################################################
+
+# Get the powerlens repository
+. ${SCRIPTS_DIR_PROJ}/get_powerlens.sh
+
+##############################################################
+
+# install orc3
+. ${SCRIPTS_DIR_PROJ}/install_orc3.sh
+
+##############################################################
+
 # Mounting dcval on SUT
 
 if ! dpkg -l | grep -q "cifs-utils"; then
@@ -68,7 +84,6 @@ if ! dpkg -l | grep -q "cifs-utils"; then
 fi
 
 ##############################################################
-
 
 # Vim editor settings
 
