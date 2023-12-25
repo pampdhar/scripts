@@ -10,7 +10,7 @@ AGT_DIR="/home/amd/tools/agt_internal"
 ##############################################################
 
 # Adding SSH keys here
-./set_ssh_keys.sh
+. ${HOME_DIR}/sys_config/set_ssh_keys.sh
 
 ##############################################################
 
