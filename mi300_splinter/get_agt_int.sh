@@ -11,6 +11,12 @@ if [ -z "${HOME_DIR}" ]; then
     AGT_DIR="/home/amd/tools/agt_internal"
 fi
 
+# Ensuring the agt_internal directory exists
+sudo chmod 777 -R "/home/amd"
+if [ ! -d ${AGT_DIR} ]; then
+    mkdir -p "${AGT_DIR}"
+fi    
+
 cd ${HOME_DIR}
 
 # Check if directory exists
