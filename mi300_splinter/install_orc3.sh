@@ -19,7 +19,7 @@ fi
 ORC_DIR="${HOME_DIR}/${ORC_DIR_NAME}"
 
 # Check if the orc3 directory already exists
-if [ -d "${ORC_DIR}" ]; then
+if [ -d "${ORC_DIR}/orc3" ]; then
     echo "${ORC_DIR_NAME} directory already exists, pulling latest changes..."
     cd "${ORC_DIR}/orc3"
     git pull git@github.amd.com:dcgpu-validation/orc3.git
