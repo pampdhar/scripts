@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # This script helps setup ssh keys for following accounts:
-# github.amd.com account with email: pamposh.dhar@amd.com
-# github.com account with email: pamposh.dhar@amd.com
+# Enterprise AMD internal account - github.amd.com account with email: <firstname>.<lastname>@amd.com
+# Public account with AMD email - github.com account with email: <firstname>.<lastname>@amd.com
 
 AMD_PUBLIC_KEYNAME="id_ed25519_public"
 AMD_ENTERPRISE_KEYNAME="id_ed25519_enterprise"
@@ -19,7 +19,7 @@ function start_ssh_agent() {
     fi
 }
 
-# Function to add SSH key to GitHub
+# Function to add SSH key to GitHub - Uses the GITHUB API
 add_ssh_key_to_github() {
     local title=$1
     local token=$2
