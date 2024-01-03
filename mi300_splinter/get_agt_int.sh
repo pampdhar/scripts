@@ -12,10 +12,11 @@ if [ -z "${HOME_DIR}" ]; then
 fi
 
 # Ensuring the agt_internal directory exists
-sudo chmod 777 -R "/home/amd"
+
 if [ ! -d ${AGT_DIR} ]; then
-    mkdir -p "${AGT_DIR}"
-fi    
+    sudo mkdir -p "${AGT_DIR}"
+fi
+sudo chmod 777 -R "/home/amd"    
 
 cd ${HOME_DIR}
 
