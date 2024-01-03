@@ -6,6 +6,8 @@ HOME_DIR="/home/${USER}"
 SCRIPTS_DIR="${HOME_DIR}/scripts"
 SCRIPTS_DIR_PROJ="${HOME_DIR}/scripts/mi300_splinter"
 AGT_DIR="/home/amd/tools/agt_internal"
+GITHUB_USER_EMAIL="pamposh.dhar@amd.com"
+GITHUB_USER_NAME="Pamposh Dhar"
 
 ##############################################################
 
@@ -54,6 +56,11 @@ echo 'alias presets="cd ${HOME_DIR}/orc3_pamposh/orc3/src/amdlibs/orc_ppa_fmt/or
 # Reload the .bashrc file for the changes to take effect
 source ~/.bashrc
 echo 'Changes to bashrc applied.'
+
+##############################################################
+
+# Github config - email and name
+. ${SCRIPTS_DIR_PROJ}/github_config.sh
 
 ##############################################################
 

@@ -14,6 +14,8 @@ AMD_GITHUB_ENTERPRISE_TOKEN="<paste token here>"
 ```
 The config file gets sourced once to store the PAT in environment variables to then authenticate the API calls.
 
+The script also installs and runs the keychain application (based on the `Funtoo Keychain Project`: https://www.funtoo.org/Funtoo:Keychain) to manage the ssh keys on the system. 
+
 ## get_agt_int.sh
 
 This script is a shell wrapper around the `amd-tool-install` package (https://conductor.amd.com/docs/tools/amd_tool_install) that is used for an automated install of the latest agt_internal version on the linux system.
