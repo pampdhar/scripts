@@ -10,14 +10,35 @@ HOSTNAME=`hostname`
 PUB_SSH_KEY_PATH=~/.ssh/${AMD_PUBLIC_KEYNAME}
 ENT_SSH_KEY_PATH=~/.ssh/${AMD_ENTERPRISE_KEYNAME}
 
-# Function that checks and starts the ssh-agent
-function start_ssh_agent() {
-    # Check if an SSH agent is already running
-    if [ -z "$SSH_AGENT_PID" ] || ! kill -0 "$SSH_AGENT_PID" 2>/dev/null; then
-        # Start a new SSH agent and set environment variables
-        eval "$(ssh-agent -s)"
+# Function to add keychain
+add_keychain(){
+    # Install keychain
+    sudo apt-get update
+    sudo apt-get upgrade -y  
+    sudo apt-get install -y keychain
+
+    # Define the keychain command in a variable
+    keychain_command="eval 'keychain --eval --agents ssh id_ed25519_public id_ed25519_enterprise'"
+
+    # Check if keychain is already configured in the bashrc file - if not append to bashrc file
+    if ! grep -q "$keychain_command" ~/.bashrc; then
+        # Add keychain configuration to the bashrc file
+        echo -e "\n# Start keychain and set up SSH agent\n$keychain_command" >> ~/.bashrc
+        echo 'export PATH="/usr/bin/keychain:$PATH"' >> ~/.bashrc
+
     fi
+
+    # Kill any existing agents and flush the keys/identities from memory
+    keychain -k all
+
+    # Start keychain and set up SSH agent (suppress output)
+    $keychain_command > /dev/null 2>&1
+
+    # Display information and instructions
+    echo "Keychain has been installed, configured, and the SSH agent has been started."
+    echo "To add your SSH keys automatically in future terminals, no additional action is needed."
 }
+
 
 # Function to add SSH key to GitHub - Uses the GITHUB API
 add_ssh_key_to_github() {
@@ -37,25 +58,11 @@ generate_new_ssh_key(){
     sudo chmod u+rwx ~/.ssh/$1.pub
 }
 
-function add_ssh_key_to_agent() {
-    local key_file="$1"
-    local key_name="$2"
 
-    # Giving user the rwx access to the key
-    sudo chmod u+rwx $key_file
-    ssh-add "$key_file"
-}
-
-# Start the SSH agent
-eval "$(ssh-agent -s)"
 
 # Check if SSH keys exists on the system
 if [ -e "${PUB_SSH_KEY_PATH}" ] && [ -e "${ENT_SSH_KEY_PATH}" ]; then
     echo "SSH keys already exist on this system. Skipping creation of new keys and addition to git accounts"
-    # Check if the SSH identities are loaded to the ssh agent
-    add_ssh_key_to_agent "$PUB_SSH_KEY_PATH" "$AMD_PUBLIC_KEYNAME"
-    add_ssh_key_to_agent "$ENT_SSH_KEY_PATH" "$AMD_ENTERPRISE_KEYNAME"
-
 else
     echo "Could not find any existing keys. Creating new SSH keys and adding to the github accounts..."
     generate_new_ssh_key ${AMD_PUBLIC_KEYNAME}
@@ -67,11 +74,10 @@ else
 
     API_URL="https://github.amd.com/api/v3/user/keys"
     add_ssh_key_to_github "SSH Key for ${HOSTNAME}" "$AMD_GITHUB_ENTERPRISE_TOKEN" ~/.ssh/${AMD_ENTERPRISE_KEYNAME}
-
-    # Add the newly created ssh keys to the agent
-    add_ssh_key_to_agent "$PUB_SSH_KEY_PATH" "$AMD_PUBLIC_KEYNAME"
-    add_ssh_key_to_agent "$ENT_SSH_KEY_PATH" "$AMD_ENTERPRISE_KEYNAME"
 fi
+
+# Finally Run the keychain function to install and run the keychain
+add_keychain
 
 
 
