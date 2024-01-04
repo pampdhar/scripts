@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # User variables
-USER="pampdhar"
-HOME_DIR="/home/${USER}"
-SCRIPTS_DIR="${HOME_DIR}/scripts"
-SCRIPTS_DIR_PROJ="${HOME_DIR}/scripts/mi300_splinter"
-AGT_DIR="/home/amd/tools/agt_internal"
-GITHUB_USER_EMAIL="pamposh.dhar@amd.com"
-GITHUB_USER_NAME="Pamposh Dhar"
+export USER="pampdhar"
+export HOME_DIR="/home/${USER}"
+export SCRIPTS_DIR="${HOME_DIR}/scripts"
+export SCRIPTS_DIR_PROJ="${HOME_DIR}/scripts/mi300_splinter"
+export AGT_DIR="/home/amd/tools/agt_internal"
+export ORC_DIR_NAME="orc3_pamposh"
+export GITHUB_USER_EMAIL="pamposh.dhar@amd.com"
+export GITHUB_USER_NAME="Pamposh Dhar"
 
 ##############################################################
 
@@ -80,7 +81,7 @@ echo 'Changes to bashrc applied.'
 ##############################################################
 
 # install orc3
-. ${SCRIPTS_DIR_PROJ}/install_orc3.sh
+. ${SCRIPTS_DIR_PROJ}/install_orc3.sh "${USER}" "${ORC_DIR_NAME}"
 
 ##############################################################
 

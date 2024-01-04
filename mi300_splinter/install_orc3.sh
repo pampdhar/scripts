@@ -1,32 +1,34 @@
 #!/bin/bash
 
 # User changes here
-USER="pampdhar"
+default_user="pampdhar"
+default_orc3_dir="orc3_pamposh"
 
 ###################################################
 
-# Check if the HOME_DIR variable is unset or set to an empty string
-# This is done to make sure this script works with the get_shell.sh script
-if [ -z "${HOME_DIR}" ]; then
-    HOME_DIR="/home/${USER}"
-fi
+# Use the environment variable from the outer script if present; otherwise, use the default value specified by the user above
+local_user="${1:-$default_user}"
+local_orc3_dir="${2:-$default_orc3_dir}"
 
-if [ -z "${ORC_DIR_NAME}" ]; then
-    ORC_DIR_NAME="orc3_pamposh"
+
+# Check if the HOME_DIR variable is unset or set to an empty string
+# This is done to make sure this script works with the set_shell.sh script
+if [ -z "${HOME_DIR}" ]; then
+    HOME_DIR="/home/${local_user}"
 fi
 
 # The home orc3 directory path
-ORC_DIR="${HOME_DIR}/${ORC_DIR_NAME}"
+ORC_DIR="${HOME_DIR}/${local_orc3_dir}"
 
 # Check if the orc3 directory already exists
 if [ -d "${ORC_DIR}/orc3" ]; then
-    echo "${ORC_DIR_NAME} directory already exists, pulling latest changes..."
+    echo "${local_orc3_dir} directory already exists, pulling latest changes..."
     cd "${ORC_DIR}/orc3"
     git pull git@github.amd.com:dcgpu-validation/orc3.git
 else
     # Create the directory
     mkdir -p "${ORC_DIR}"
-    echo "${ORC_DIR_NAME} directory created"
+    echo "${local_orc3_dir} directory created"
     cd "${ORC_DIR}"
     git clone git@github.amd.com:dcgpu-validation/orc3.git
     cd "${ORC_DIR}/orc3"
