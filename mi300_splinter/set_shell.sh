@@ -1,10 +1,8 @@
 #!/bin/bash
 
 # User variables
-export USER="pampdhar"
-export HOME_DIR="/home/${USER}"
-export SCRIPTS_DIR="${HOME_DIR}/scripts"
-export SCRIPTS_DIR_PROJ="${HOME_DIR}/scripts/mi300_splinter"
+export SCRIPTS_DIR="${HOME}/scripts"
+export SCRIPTS_DIR_PROJ="${HOME}/scripts/mi300_splinter"
 export AGT_DIR="/home/amd/tools/agt_internal"
 export ORC_DIR_NAME="orc3_pamposh"
 export GITHUB_USER_EMAIL="pamposh.dhar@amd.com"
@@ -13,12 +11,12 @@ export GITHUB_USER_NAME="Pamposh Dhar"
 ##############################################################
 
 # Adding SSH keys here
-. ${HOME_DIR}/sys_config/set_ssh_keys.sh
+. ${HOME}/sys_config/set_ssh_keys.sh
 
 ##############################################################
 
 # Get the scripts folder
-cd ${HOME_DIR}
+cd ${HOME}
 
 # Check if the scripts directory exists
 if [ -d "${SCRIPTS_DIR}" ]; then
@@ -35,7 +33,7 @@ fi
 # Modify bashrc file
 
 # Creating a backup bashrc file
-cp ${HOME_DIR}/.bashrc ${HOME_DIR}/.bashrc_backup
+cp ${HOME}/.bashrc ${HOME}/.bashrc_backup
 
 # Adding the script folder 
 echo 'export PATH=$PATH:${SCRIPTS_DIR}' >> ~/.bashrc
@@ -50,9 +48,9 @@ echo 'alias agt="cd /home/amd/tools/agt_internal/"' >> ~/.bashrc
 echo 'alias vb="cd /home/amd/tools/amdvbflash/"' >> ~/.bashrc
 echo 'alias ifwi="cd /home/amd/tools/amdvbflash/;sudo ./amdvbflash -i"' >> ~/.bashrc
 echo 'alias devices="cd /home/amd/tools/agt_internal/;sudo ./agt_internal -i"' >> ~/.bashrc
-echo 'alias orc="cd ${HOME_DIR}/orc3_pamposh/orc3/"' >> ~/.bashrc
-echo 'alias pa="cd ${HOME_DIR}/orc3_pamposh/orc3/orc_test/power_attainment/"' >> ~/.bashrc
-echo 'alias presets="cd ${HOME_DIR}/orc3_pamposh/orc3/src/amdlibs/orc_ppa_fmt/orc_ppa_fmt/app_presets"' >> ~/.bashrc
+echo 'alias orc="cd ${HOME}/orc3_pamposh/orc3/"' >> ~/.bashrc
+echo 'alias pa="cd ${HOME}/orc3_pamposh/orc3/orc_test/power_attainment/"' >> ~/.bashrc
+echo 'alias presets="cd ${HOME}/orc3_pamposh/orc3/src/amdlibs/orc_ppa_fmt/orc_ppa_fmt/app_presets"' >> ~/.bashrc
 
 # Reload the .bashrc file for the changes to take effect
 source ~/.bashrc
@@ -71,7 +69,7 @@ echo 'Changes to bashrc applied.'
 ##############################################################
 
 # Get the latest agt_internal with the amd-tool-installer
-. ${SCRIPTS_DIR_PROJ}/get_agt_int.sh
+. ${SCRIPTS_DIR_PROJ}/get_agt_int.sh "${AGT_DIR}"
 
 ##############################################################
 
@@ -81,7 +79,7 @@ echo 'Changes to bashrc applied.'
 ##############################################################
 
 # install orc3
-. ${SCRIPTS_DIR_PROJ}/install_orc3.sh "${USER}" "${ORC_DIR_NAME}"
+. ${SCRIPTS_DIR_PROJ}/install_orc3.sh "${ORC_DIR_NAME}"
 
 ##############################################################
 

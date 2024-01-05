@@ -2,38 +2,38 @@
 
 # Get the latest agt_internal
 
-USER="pampdhar"
+# User changes here
+default_agt_dir="/home/amd/tools/agt_internal"
 
-# Check if the HOME_DIR variable is unset or set to an empty string
-# This is done to make sure this script works with the get_shell.sh script
-if [ -z "${HOME_DIR}" ]; then
-    HOME_DIR="/home/${USER}"
-    AGT_DIR="/home/amd/tools/agt_internal"
-fi
+###################################################
+
+# Check if the AGT_DIR environment variable is unset or set to an empty string
+# This is done to make sure this script works with the set_shell.sh script
+local_agt_dir="${1:-$default_agt_dir}"
 
 # Ensuring the agt_internal directory exists
 
-if [ ! -d ${AGT_DIR} ]; then
-    sudo mkdir -p "${AGT_DIR}"
+if [ ! -d ${local_agt_dir} ]; then
+    sudo mkdir -p "${local_agt_dir}"
 fi
 sudo chmod 777 -R "/home/amd"    
 
-cd ${HOME_DIR}
+cd ${HOME}
 
 # Check if directory exists
 if [ ! -d amd-installer-tools ]; then
     python3 -m venv amd-installer-tools
 fi
 
-source ${HOME_DIR}/amd-installer-tools/bin/activate
+source ${HOME}/amd-installer-tools/bin/activate
 python3 -m pip install amd-tool-installer --extra-index-url=http://mkmartifactory.amd.com/artifactory/api/pypi/hw-orc3pypi-prod-local/simple --trusted-host=mkmartifactory.amd.com --upgrade
 
 # Check if an older agt-internal version already exists
-if [ -f "${AGT_DIR}/agt_internal" ]; then
+if [ -f "${local_agt_dir}/agt_internal" ]; then
     echo "An older agt_internal version already exists. Getting the latest version now..."
-    sudo rm ${AGT_DIR}/agt_internal
+    sudo rm ${local_agt_dir}/agt_internal
 else
     echo "Installing the latest agt_internal version..."
 fi
-amd-tool-install agt_internal ${AGT_DIR} latest
+amd-tool-install agt_internal ${local_agt_dir} latest
 deactivate

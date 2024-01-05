@@ -4,15 +4,31 @@ Scripts for MI product execution
 ## set_ssh_keys.sh
 This script helps create ssh keys for a linux system (only) and add them to the public (github.com) and internal AMD github account (github.amd.com) using the github API.
 
-It requires a separate shell file to be created by the user called `ssh_config.sh` that essentially stores the user's PERSONAL ACCESS TOKEN (PAT) that will be used for the API calls. Create the personal access tokens in the respective github accounts first.
+It requires a separate shell file to be created by the user called `ssh_config.sh` that essentially stores the user's PERSONAL ACCESS TOKENs (PATs) that will be used for the API calls. Create the personal access tokens in the respective github accounts first.
 
-The `ssh_config.sh` file needs to be in the format:
+Now follow the steps below to safely store the PATs in this file on the system in a new hidden folder called `secrets` in the path `~/.secrets` and ensure the relavant permissions for the PATs.
 
+```
+mkdir -p ~/.secrets
+chmod 700 ~/.secrets
+touch ~/.secrets/ssh_config.sh
+```
+Save the PATs in the file in the format:
 ```
 AMD_GITHUB_PUBLIC_TOKEN="<paste token here>"
 AMD_GITHUB_ENTERPRISE_TOKEN="<paste token here>"
 ```
+Set the following permissions for the `ssh_config.sh` file:
+```
+chmod 600 ~/.secrets/ssh_config.sh
+```
+
 The config file gets sourced once to store the PAT in environment variables to then authenticate the API calls.
+
+Now run the script as follows:
+```shell
+./set_ssh_keys.sh
+```
 
 The script also installs and runs the keychain application (based on the `Funtoo Keychain Project`: https://www.funtoo.org/Funtoo:Keychain) to manage the ssh keys on the system. 
 

@@ -50,15 +50,21 @@ add_ssh_key_to_github() {
 
 # Function to generate a new ssh key
 generate_new_ssh_key(){
-# Source the config file to get the environment variables storing the personal access tokens
-    source ssh_config.sh
     # Generate SSH key
     ssh-keygen -t ed25519 -f ~/.ssh/$1 -N ''
     # Giving user the rwx access to the key
     sudo chmod u+rwx ~/.ssh/$1.pub
 }
 
-
+source_ssh_config(){
+    # Sourcing the ssh_config.sh file to store the PATs as environment variables
+    if [ -f ~/.secrets/ssh_config.sh ]; then
+        source ~/.secrets/ssh_config.sh
+    else
+        echo "Could not find the ssh_config.sh file in the secrets folder!"
+        exit 1
+    fi
+}
 
 # Check if SSH keys exists on the system
 if [ -e "${PUB_SSH_KEY_PATH}" ] && [ -e "${ENT_SSH_KEY_PATH}" ]; then
@@ -67,6 +73,9 @@ else
     echo "Could not find any existing keys. Creating new SSH keys and adding to the github accounts..."
     generate_new_ssh_key ${AMD_PUBLIC_KEYNAME}
     generate_new_ssh_key ${AMD_ENTERPRISE_KEYNAME}
+
+    # Sourcing the ssh_config file to get the PATs needed for the github API calls
+    source_ssh_config
 
     # Add keys to GitHub
     API_URL="https://api.github.com/user/keys"

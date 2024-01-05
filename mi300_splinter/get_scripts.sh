@@ -2,17 +2,9 @@
 
 # Get the scripts folder from github.com account
 
-# User changes here
-default_user="pampdhar"
-
-###################################################
-
-# Use the environment variable from the outer script if present; otherwise, use the default value specified by the user above
-local_user="${1:-$default_user}"
-
 # Check if the HOME_DIR variable is unset or set to an empty string
 if [ -z "${HOME_DIR}" ]; then
-    HOME_DIR="/home/${local_user}"
+    HOME_DIR="/home/${USER}"
     SCRIPTS_DIR="${HOME_DIR}/scripts"
     SCRIPTS_DIR_PROJ="${HOME_DIR}/scripts/mi300_splinter"
 fi

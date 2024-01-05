@@ -2,16 +2,7 @@
 
 # Get the powerlens repo - assuming ssh keys are configured
 
-# User changes here
-USER="pampdhar"
-
-# Check if the HOME_DIR variable is unset or set to an empty string
-# This is done to make sure this script works with the get_shell.sh script
-if [ -z "${HOME_DIR}" ]; then
-    HOME_DIR="/home/${USER}"
-fi
-
-POWERLENS_DIR="${HOME_DIR}/powerlens"
+POWERLENS_DIR="${HOME}/powerlens"
 
 # Check if the powerlens already exists
 if [ -d "${POWERLENS_DIR}" ]; then
@@ -20,7 +11,7 @@ if [ -d "${POWERLENS_DIR}" ]; then
     cd "${POWERLENS_DIR}"
     git pull git@github.amd.com:dcgpu-validation/powerlens.git
 else
-    cd "${HOME_DIR}"
+    cd "${HOME}"
     git clone git@github.amd.com:dcgpu-validation/powerlens.git
     cd "${POWERLENS_DIR}"
     pip install -e .
