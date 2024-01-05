@@ -44,4 +44,11 @@ This script clones and installs the latest dev version of  orchestrator3 on the 
 
 ## set_shell.sh
 
-This script is a linux system setup script that combines all the major scripts described above and calls them.
+This script is a top level linux system setup script that combines all the major scripts described above and some others and calls them sequentially. Here's a list of a few scripts being invoked:
+- set_ssh_keys.sh
+- github_config.sh
+- get_agt_int.sh
+- get_powerlens.sh
+- install_orc3.sh
+
+Make sure to open the script and change/update the environment variables at the top before running the script. 

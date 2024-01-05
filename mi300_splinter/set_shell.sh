@@ -59,7 +59,7 @@ echo 'Changes to bashrc applied.'
 ##############################################################
 
 # Github config - email and name
-. ${SCRIPTS_DIR_PROJ}/github_config.sh
+. ${SCRIPTS_DIR_PROJ}/github_config.sh "${GITHUB_USER_EMAIL}" "${GITHUB_USER_NAME}"
 
 ##############################################################
 
