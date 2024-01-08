@@ -11,10 +11,13 @@ default_agt_dir="/home/amd/tools/agt_internal"
 # This is done to make sure this script works with the set_shell.sh script
 local_agt_dir="${1:-$default_agt_dir}"
 
-# Ensuring the agt_internal directory exists
+# Parent dir is needed for the actual amd-tool-install command eventually
+parent_dir=$(dirname "$local_agt_dir")
 
+# Checking if the agt_internal directory exists
 if [ ! -d ${local_agt_dir} ]; then
-    sudo mkdir -p "${local_agt_dir}"
+    #sudo mkdir -p "${local_agt_dir}"
+    sudo mkdir -p "${parent_dir}"
 fi
 sudo chmod 777 -R "/home/amd"    
 
@@ -30,10 +33,10 @@ python3 -m pip install amd-tool-installer --extra-index-url=http://mkmartifactor
 
 # Check if an older agt-internal version already exists
 if [ -f "${local_agt_dir}/agt_internal" ]; then
-    echo "An older agt_internal version already exists. Getting the latest version now..."
+    echo "Detected an existing agt_internal version. Getting the latest version now..."
     sudo rm ${local_agt_dir}/agt_internal
 else
     echo "Installing the latest agt_internal version..."
 fi
-amd-tool-install agt_internal ${local_agt_dir} latest
+amd-tool-install agt_internal $parent_dir latest
 deactivate
