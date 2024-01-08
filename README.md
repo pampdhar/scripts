@@ -32,6 +32,10 @@ Now run the script as follows:
 
 The script also installs and runs the keychain application (based on the `Funtoo Keychain Project`: https://www.funtoo.org/Funtoo:Keychain) to manage the ssh keys on the system. 
 
+## setup_keychain.sh
+
+This script exclusively sets up the keychain application described as part of the `set_ssh_keys.sh` script earlier. If the `set_ssh_keys.sh` scripts is run, this script is not needed. 
+
 ## get_agt_int.sh
 
 This script is a shell wrapper around the `amd-tool-install` package (https://conductor.amd.com/docs/tools/amd_tool_install) that is used for an automated install of the latest agt_internal version on the linux system.
@@ -41,6 +45,14 @@ It checks for (and skips if already present) and installs the latest version in 
 ## install_orc3.sh
 
 This script clones and installs the latest dev version of  orchestrator3 on the linux system.
+
+## github_config.sh
+
+This script helps configure the email id and name for the github accounts - needed to make commits on the linux system.
+
+## setup_ubuntu.sh
+
+This script does initial package installs for the ubuntu system.
 
 ## set_shell.sh
 
