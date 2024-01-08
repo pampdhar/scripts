@@ -30,11 +30,9 @@ Now run the script as follows:
 ./set_ssh_keys.sh
 ```
 
-The script also installs and runs the keychain application (based on the `Funtoo Keychain Project`: https://www.funtoo.org/Funtoo:Keychain) to manage the ssh keys on the system. 
-
 ## setup_keychain.sh
 
-This script exclusively sets up the keychain application described as part of the `set_ssh_keys.sh` script earlier. If the `set_ssh_keys.sh` scripts is run, this script is not needed. 
+This script exclusively sets up the keychain application (based on the `Funtoo Keychain Project`: https://www.funtoo.org/Funtoo:Keychain). If the `set_ssh_keys.sh` scripts is run, this script is not needed. 
 
 ## get_agt_int.sh
 
